@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// con uuid() el id no es incremental, es random
+model User {
+  id                String      @id @default(uuid())
+  email             String      @unique
+  passwordHash      String
+  fullName          String
+  phoneNumber       String?
+  bio               String?
+  role              Role        @default(USER)  //  USER o ADMIN
+  raffles           Raffle[]    //  Sorteos que este usuario creó
+  tickets           Ticket[]    //  Tickets que este usuario compró
+  createdAt         DateTime    @default(now())
+}
+
+model Raffle {
+  id                String    @id @default(uuid())
+  title             String
+  description       String?
+  pricePerTicket    Float
+  startDate         DateTime
+  endDate           DateTime
+  locationId        String?
+  status            RaffleStatus  @default(DRAFT)
+
+  // Datos de cobro (Backend focus)
+  bankCbu           String?
+  bankAlias         String?
+
+  ownerId           String
+  owner             User        @relation(fields: [ownerId], references: [id])
+  location          Location?   @relation(fields: [locationId], references: [id])
+
+  tickets           Ticket[]
+  prizes            Prize[]
+  createdAt         DateTime  @default(now())
+}
+
+model Ticket {
+  id                String    @id @default(uuid())
+  numberValue       Int      // El numero de la rifa (ej: 45)
+  status            TicketStatus  @default(AVAILABLE)
+
+  raffleId          String
+  raffle            Raffle    @relation(fields: [raffleId], references: [id])
+
+  buyerId           String?
+  buyer             User?     @relation(fields: [buyerId], references: [id])
+
+  reservedAt        DateTime?   // Para limpiar reservas viejas
+
+  @@unique([raffleId, numberValue]) // Regla de oro: No puede haber dos numeros iguales en el mismo sorteo.
+}
+
+model Prize {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  imageUrl    String?  
+  
+  raffleId    String
+  raffle      Raffle   @relation(fields: [raffleId], references: [id])
+}
+
+// Manejamos las ubicaciones de forma profesional
+model Location {
+  id         String   @id @default(uuid())
+  country    String   @default("Argentina")
+  province   String
+  city       String
+  zipCode    String
+  
+  raffles    Raffle[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum RaffleStatus {
+  DRAFT
+  ACTIVE
+  FINISHED
+  CANCELLED
+}
+
+enum TicketStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+}

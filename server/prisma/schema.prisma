@@ -35,6 +35,7 @@ model Raffle {
   startDate         DateTime
   endDate           DateTime
   locationId        String?
+  maxTickets        Int       @default(100)
   status            RaffleStatus  @default(DRAFT)
 
   // Datos de cobro (Backend focus)

@@ -7,7 +7,7 @@ export const createRaffle = async (data : {
     title: string;
     description?: string;
     pricePerTicket: number;
-    totalTickets: number;
+    maxTickets: number;
     startDate: Date;
     endDate: Date;
     creatorId: string;
@@ -18,9 +18,10 @@ export const createRaffle = async (data : {
             title: data.title,
             description: data.description,
             pricePerTicket: data.pricePerTicket,
-            totalTickets: data.totalTickets,
+            maxTickets: data.maxTickets,
             startDate: data.startDate,
             endDate: data.endDate,
+            // Connect the raffle to the existing user
             owner: {
                 connect: { id: data.creatorId }
             }

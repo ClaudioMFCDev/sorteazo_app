@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { PrismaClient} from '@prisma/client';
 import * as authController from './controllers/auth.controller.js';
 import authRoutes from './routes/auth.routes.js';
+import raffleRoutes from './routes/raffle.routes.js';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/raffles', raffleRoutes);
 
 // Ruta profesional
 app.get('/health', (req, res)=> {

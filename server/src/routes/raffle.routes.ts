@@ -6,6 +6,7 @@ const router = Router();
 
 // GET /api/raffles - Public route to list all raffles
 router.get('/', raffleController.list);
+router.get('/:id', raffleController.getById);
 
 // POST /api/raffles - Protecte route
 router.post('/', authenticateToken, raffleController.create);

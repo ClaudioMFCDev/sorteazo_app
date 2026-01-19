@@ -35,7 +35,7 @@ export const create = async (req: AuthRequest, res: Response) => {
 // Controller to list all raffles
 export const list = async (_req: Request, res: Response) => {
     try {
-        const raffles = await raffleService.getAllRafles();
+        const raffles = await raffleService.getAllRaffles();
 
         res.json({
             count: raffles.length,
@@ -47,3 +47,23 @@ export const list = async (_req: Request, res: Response) => {
         res.status(500).json({ message: 'Internal server error'});
     }
 };
+
+// Controller to get a single raffle by ID
+export const getById = async (req: Request, res: Response) => {
+    try {
+
+        const { id } = req.params;
+        // I ensure 'id' is treated as a string to match the service expectations
+        const raffle = await raffleService.getRaffleById(id as string);
+
+        if (!raffle) {
+            return res.status(404).json({ message: 'Raffle not found'});
+        }
+
+        res.json(raffle);
+
+    } catch (error) {
+        console.error('Error getting raffle: ', error);
+        res.status(500).json({ mesagge: 'Internal server error'});
+    }
+}

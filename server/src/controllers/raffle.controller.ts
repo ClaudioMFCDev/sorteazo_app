@@ -68,4 +68,31 @@ export const getById = async (req: Request, res: Response) => {
     }
 }
 
+// Controller to get raffles belonging to the authenticated user
+export const getMyRaffles = async (req: AuthRequest, res: Response) => {
+    try {
+        const userId = req.user?.userId;
+
+        if (!userId) {
+            return res.status(401).json({ message: 'Unautherized'});
+        }
+
+        const raffles = await raffleService.getRaffleByUserId(userId);
+
+        res.json({
+            count: raffles.length,
+            raffles
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error'});
+    }
+};
+
+
+
+
+
+
+
 

@@ -64,3 +64,21 @@ export const getRaffleById = async (id: string) => {
   });
 };
 
+// Get only raffle created by a specific user
+export const getRaffleByUserId = async (userId: string) => {
+  return await prisma.raffle.findMany({
+    where: {
+      ownerId: userId // Filter by the foreign key
+    },
+    include: {
+      prizes: true, // I include prizes to show a complete summary
+      _count: {
+        select: { tickets: true } // Bonus: This counts the tickets sold without fetching them all
+      }
+    },
+    orderBy:{
+      createdAt: 'desc'
+    }
+  });
+};
+

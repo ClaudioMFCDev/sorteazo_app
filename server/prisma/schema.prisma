@@ -68,13 +68,16 @@ model Ticket {
 }
 
 model Prize {
-  id          String   @id @default(uuid())
-  title       String
+  id          String    @id @default(uuid())
+  title       String    // e.g. "Main Prize: Car"
   description String?
-  imageUrl    String?  
+  imageUrl    String?
+  position    Int       // e.g. 1 for first place, 2 for 2do place, etc.
   
   raffleId    String
   raffle      Raffle   @relation(fields: [raffleId], references: [id])
+
+  createdAt   DateTime  @default(now())
 }
 
 // Manejamos las ubicaciones de forma profesional

@@ -30,39 +30,37 @@ export const createRaffle = async (data: {
 
 // Function to retrieve all raffles from the database
 export const getAllRaffles = async () => {
-    return await prisma.raffle.findMany({
-        include: {
-            // we include the owner's basic info but skip sensitive data
-            owner: {
-                select: {
-                    id: true,
-                    fullName: true,
-                    email: true
-                }
-            }
+  return await prisma.raffle.findMany({
+    include: {
+      // we include the owner's basic info but skip sensitive data
+      owner: {
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
         },
-        orderBy: {
-            createdAt: 'desc'
-        }
-    });
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 };
 
 // Find a single  raffle by its unique ID
 export const getRaffleById = async (id: string) => {
   return await prisma.raffle.findUnique({
     // Id recived from call
-    where: {id},
+    where: { id },
     include: {
       owner: {
         select: {
           fullName: true,
-          email: true
-        }
-      }
-    }
+          email: true,
+        },
+      },
+      prizes: true
+    },
   });
 };
-
-
-
 

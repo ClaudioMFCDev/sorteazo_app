@@ -98,9 +98,11 @@ export const getMyRaffles = async (req: AuthRequest, res: Response) => {
 
         const raffles = await raffleService.getRaffleByUserId(userId);
 
+        const safeRaffle = raffles || [];
+
         res.json({
-            count: raffles.length,
-            raffles
+            count: safeRaffle.length,
+            raffles: safeRaffle
         });
     } catch (error) {
         console.error(error);

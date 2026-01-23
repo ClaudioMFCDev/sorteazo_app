@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { generateShortCode } from "../utils/generateCode";
+import { count } from "node:console";
 
 const prisma = new PrismaClient();
 
@@ -53,32 +54,9 @@ export const getAllRaffles = async () => {
   });
 };
 
-// Find a single  raffle by its unique ID
-export const getRaffleById = async (id: string) => {
-  return await prisma.raffle.findUnique({
-    // Id recived from call
-    where: { id },
-    include: {
-      owner: {
-        select: {
-          fullName: true,
-          phoneNumber: true,
-        },
-      },
-      prizes: true,
-      tickets: {
-        select: {
-          numberValue: true,
-          status: true,
-        },
-      },
-    },
-  });
-};
-
 // Get only raffle created by a specific user
 export const getRaffleByUserId = async (userId: string) => {
-  return await prisma.raffle.findMany({
+  const raffles = await prisma.raffle.findMany({
     where: {
       ownerId: userId, // Filter by the foreign key
     },
@@ -92,10 +70,61 @@ export const getRaffleByUserId = async (userId: string) => {
       createdAt: "desc",
     },
   });
+
+// ¡No uses return null aquí! findMany siempre da un array.
+  return raffles.map((raffle) => {
+    const soldCount = raffle._count.tickets;
+    const progressPercentage = (soldCount / raffle.maxTickets) * 100;
+
+    return {
+      ...raffle,
+      progressPercentage: Number(progressPercentage.toFixed(2)),
+    };
+  });
+  
 };
 
+// Find a single  raffle by its unique ID
+export const getRaffleById = async (id: string) => {
+  const raffle = await prisma.raffle.findUnique({
+    // Id recived from call
+    where: { id },
+    include: {
+      owner: {
+        select: {
+          fullName: true,
+          phoneNumber: true,
+        },
+      },
+      prizes: true,
+      _count:{
+        select:{
+          tickets: true
+        }
+      },
+      tickets: {
+        select: {
+          numberValue: true,
+          status: true,
+        },
+      },
+    },
+  });
+
+  if (!raffle) return null;
+
+  const soldCount = raffle._count.tickets;
+  const progressPercentage = (soldCount/ raffle.maxTickets) * 100;
+
+  return {
+    ...raffle,
+    progressPercentage: Number(progressPercentage.toFixed(2))
+  };
+};
+
+
 export const getRaffleBySlug = async (slug: string) => {
-  return await prisma.raffle.findUnique({
+  const raffle = await prisma.raffle.findUnique({
     where: { slug },
     include: {
       prizes: true,
@@ -106,8 +135,22 @@ export const getRaffleBySlug = async (slug: string) => {
         },
       },
       owner: {
-        select: { fullName: true },
+        select: { fullName: true, phoneNumber: true },
+      },
+      _count: {
+        select: { tickets: true },
       },
     },
   });
+
+  if (!raffle) return null;
+
+  const soldCount = raffle._count.tickets;
+  const progressPercentage = (soldCount/ raffle.maxTickets) * 100;
+
+  return {
+    ...raffle,
+    progressPercentage: Number(progressPercentage.toFixed(2))
+  };
+
 };

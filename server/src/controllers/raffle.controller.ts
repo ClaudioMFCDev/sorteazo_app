@@ -68,6 +68,25 @@ export const getById = async (req: Request, res: Response) => {
     }
 }
 
+// Controller to get raffle by slug
+export const getBySlug = async (req: Request, res: Response) => {
+    try {
+        const { slug } = req.params;
+
+        const raffle = raffleService.getRaffleBySlug(slug as string);
+
+        if (!raffle) {
+            return res.status(404).json({ message: `El sorteo de código ${slug} no existe`});
+        }
+
+        res.status(200).json(raffle);
+
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error consultando sorteo por código'});
+    }
+};
+
 // Controller to get raffles belonging to the authenticated user
 export const getMyRaffles = async (req: AuthRequest, res: Response) => {
     try {

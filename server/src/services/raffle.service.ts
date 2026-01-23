@@ -62,10 +62,16 @@ export const getRaffleById = async (id: string) => {
       owner: {
         select: {
           fullName: true,
-          email: true,
+          phoneNumber: true,
         },
       },
-      prizes: true
+      prizes: true,
+      tickets: {
+        select: {
+          numberValue: true,
+          status: true,
+        },
+      },
     },
   });
 };
@@ -74,30 +80,34 @@ export const getRaffleById = async (id: string) => {
 export const getRaffleByUserId = async (userId: string) => {
   return await prisma.raffle.findMany({
     where: {
-      ownerId: userId // Filter by the foreign key
+      ownerId: userId, // Filter by the foreign key
     },
     include: {
       prizes: true, // I include prizes to show a complete summary
       _count: {
-        select: { tickets: true } // Bonus: This counts the tickets sold without fetching them all
-      }
+        select: { tickets: true }, // Bonus: This counts the tickets sold without fetching them all
+      },
     },
-    orderBy:{
-      createdAt: 'desc'
-    }
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 
-
 export const getRaffleBySlug = async (slug: string) => {
-    return await prisma.raffle.findUnique({
-      where: { slug },
-      include: {
-        prizes: true,
-        owner: {
-          select: { fullName: true }
-        }
-      }
-    });
+  return await prisma.raffle.findUnique({
+    where: { slug },
+    include: {
+      prizes: true,
+      tickets: {
+        select: {
+          numberValue: true,
+          status: true,
+        },
+      },
+      owner: {
+        select: { fullName: true },
+      },
+    },
+  });
 };
-

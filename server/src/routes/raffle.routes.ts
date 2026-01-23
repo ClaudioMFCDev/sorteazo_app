@@ -10,6 +10,7 @@ router.get('/me', authenticateToken, raffleController.getMyRaffles);
 // GET /api/raffles - Public route to list all raffles
 router.get('/', raffleController.list);
 router.get('/:id', raffleController.getById);
+router.get('/b/:slug', raffleController.getBySlug);
 
 // POST /api/raffles - Protecte route
 router.post('/', authenticateToken, raffleController.create);

@@ -5,6 +5,7 @@ import { PrismaClient} from '@prisma/client';
 import authRoutes from './routes/auth.routes.js';
 import raffleRoutes from './routes/raffle.routes.js';
 import prizeRoutes from './routes/prize.routes.js';
+import ticketRoutes from './routes/tickets.routes.js'
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/raffles', raffleRoutes);
 app.use('/api/prize', prizeRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 // Ruta profesional
 app.get('/health', (req, res)=> {

@@ -7,7 +7,7 @@ import { count } from "node:console";
 export const create = async (req: AuthRequest, res: Response) => {
     try {
         // 1. Extract data from the body
-        const { title, description, pricePerTicket, maxTickets, startDate, endDate} = req.body;
+        const { title, description, pricePerTicket, maxTickets, startDate, endDate, locationId, bankCbu, bankAlias} = req.body;
 
         const creatorId = req.user?.userId;
 
@@ -21,7 +21,7 @@ export const create = async (req: AuthRequest, res: Response) => {
             maxTickets: Number(maxTickets),
             startDate: new Date(startDate),
             endDate: new Date(endDate),
-            creatorId
+            ownerId: creatorId
         });
 
         res.status(201).json({ message: 'Raffle created succefully'});

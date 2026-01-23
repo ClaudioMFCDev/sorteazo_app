@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { generateShortCode } from "../utils/generateCode";
 
 const prisma = new PrismaClient();
 
@@ -10,20 +11,25 @@ export const createRaffle = async (data: {
   maxTickets: number;
   startDate: Date;
   endDate: Date;
-  creatorId: string;
+  ownerId: string;
+  locationId?: string;
+  bankCbu?: string;
+  bankAlias?: string;
 }) => {
   return await prisma.raffle.create({
     data: {
       title: data.title,
       description: data.description,
+      slug: generateShortCode(),
       pricePerTicket: data.pricePerTicket,
       maxTickets: data.maxTickets,
+      locationId: data.locationId,
+      bankCbu: data.bankCbu,
+      bankAlias: data.bankAlias,
       startDate: data.startDate,
       endDate: data.endDate,
       // Connect the raffle to the existing user
-      owner: {
-        connect: { id: data.creatorId },
-      },
+      ownerId: data.ownerId,
     },
   });
 };

@@ -31,6 +31,7 @@ model Raffle {
   id                String    @id @default(uuid())
   title             String
   description       String?
+  slug              String?    @unique // Human code
   pricePerTicket    Float
   startDate         DateTime
   endDate           DateTime
@@ -60,6 +61,8 @@ model Ticket {
   raffle            Raffle    @relation(fields: [raffleId], references: [id])
 
   buyerId           String?
+  guestEmail        String?
+  operationId       String    @unique // Something like 'R-1432' for the user
   buyer             User?     @relation(fields: [buyerId], references: [id])
 
   reservedAt        DateTime?   // Para limpiar reservas viejas

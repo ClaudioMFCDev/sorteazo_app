@@ -73,7 +73,7 @@ export const getBySlug = async (req: Request, res: Response) => {
     try {
         const { slug } = req.params;
 
-        const raffle = raffleService.getRaffleBySlug(slug as string);
+        const raffle = await raffleService.getRaffleBySlug(slug as string);
 
         if (!raffle) {
             return res.status(404).json({ message: `El sorteo de código ${slug} no existe`});

@@ -91,7 +91,7 @@ export const getRaffleByUserId = async (userId: string) => {
 
 export const getRaffleBySlug = async (slug: string) => {
     return await prisma.raffle.findUnique({
-      where: {slug},
+      where: { slug },
       include: {
         prizes: true,
         owner: {

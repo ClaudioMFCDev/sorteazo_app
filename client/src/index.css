@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+  /* Aquí definimos tus colores personalizados para Sorteazo */
+  --color-primary: #3b82f6;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  
+  /* Fuentes opcionales para mobile-first */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Estilos base si los necesitas */
+:root {
+  font-family: var(--font-sans);
+}

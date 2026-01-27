@@ -2,6 +2,8 @@ import { Routes, Route} from 'react-router-dom';
 import { Bottom } from './components/layout/BottomNav';
 import { Home } from './pages/Home';
 import { Profile } from './pages/Profile';
+import { CreateRaffle } from './pages/CreateRaffle';
+import { MyRaffles } from './pages/MyRaffles';
 import './App.css'
 
 function App() {
@@ -11,7 +13,9 @@ function App() {
       <main>
         <Routes>
           <Route path='/' element={<Home />}/>
-          <Route path='/perfil' element={<Profile />} />       
+          <Route path='/perfil' element={<Profile />} />
+          <Route path='/crear' element={<CreateRaffle />} />    
+          <Route path='/mis-rifas' element={<MyRaffles />} />    
         </Routes>
       </main>
       <Bottom/>

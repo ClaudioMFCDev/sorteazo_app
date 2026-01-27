@@ -1,8 +1,10 @@
 import './App.css'
+import { Bottom } from './components/layout/BottomNav'
 
 function App() {
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center">
       <h1 className="text-4xl font-bold text-primary italic">
         Sorteazo v4!
@@ -14,6 +16,8 @@ function App() {
         Botón Pro
       </button>
     </div>
+    <Bottom/>
+    </>
   )
 }
 

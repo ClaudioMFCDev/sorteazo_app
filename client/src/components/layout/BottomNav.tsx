@@ -12,9 +12,9 @@ export const Bottom = () => {
                 <Ticket size={24}/>
                 <span className='text-xs mt-1'>Mis Rifas</span>
             </button>
-            <button>
-                <PlusCircle size={32} className='text-primary -mt-6 bg-white rounded-full border-4 border-white'/>
-                <span className='text-xs mt-1'>Perfil</span>
+            <button className='flex flex-col items-center text-gray-400'>
+                <PlusCircle size={40} className='text-primary -mt-6 bg-white rounded-full border-4 border-white'/>
+                <span className='text-xs mt-1'>Crear</span>
             </button>
             <button className='flex flex-col items-center text-gray-400'>
                 <User size={24}/>

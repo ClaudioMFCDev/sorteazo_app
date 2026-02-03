@@ -15,8 +15,7 @@ export const RaffleCard = ({
     pricePerTicket,
     progress,
     endDate,
-    maxTickets,
-    totalTickets
+    maxTickets
 } : RaffleCardProps) => {
 
     // Logic to check is the raffle is expired

@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { generateShortCode } from "../utils/generateCode";
 import { count } from "node:console";
 
+
 const prisma = new PrismaClient();
 
 // Function to create a new raffle in the database

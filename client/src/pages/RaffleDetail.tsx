@@ -15,7 +15,7 @@ export const RaffleDetail = () => {
         </div>
     );
 
-    if (error || raffle) return (
+    if (error || !raffle) return (
         <div className="p-4 text-center">
             <p className="text-danger">No pudimos encontrar este sorteo.</p>
             <button onClick={() => navigate('/')} className="mt-4 text-primary underline">

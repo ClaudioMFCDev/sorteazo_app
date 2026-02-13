@@ -1,27 +1,22 @@
 import { Calendar, Ticket } from "lucide-react";
+import { Link } from 'react-router-dom';
+import type { Raffle } from "../types/raffle";
 
-//Props definition to receive data from parent
-interface RaffleCardProps {
-    title: string;
-    pricePerTicket: number;
-    progress: number;
-    totalTickets: number;
-    maxTickets: number;
-    endDate: string; // ISO string from Backend
-}
 
 export const RaffleCard = ({
+    id,
     title,
     pricePerTicket,
-    progress,
+    progressPercentage,
     endDate,
     maxTickets
-} : RaffleCardProps) => {
+} : Raffle) => {
 
     // Logic to check is the raffle is expired
     const isExpired = new Date(endDate) < new Date();
-    const isSoldOut = progress >= maxTickets;
+    const isSoldOut = progressPercentage >= maxTickets;
     const isDisable = isExpired || isSoldOut;
+    
     return(
         <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-4 transition-opacity ${isDisable ? 'opacity-60' : 'opacity-100'}`}>
             <div className="p-4">
@@ -52,12 +47,12 @@ export const RaffleCard = ({
                     <div className="flex justify-between text-xs font-medium">
                         <span className="text-gray-400">Progreso</span>
                         <span className={isDisable ? 'text-gray-400' : 'text-primary'}>
-                            {isSoldOut ? 'Completo!' : `${progress}%`}
+                            {isSoldOut ? 'Completo!' : `${progressPercentage}%`}
                         </span>
                     </div>
 
                     <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                        <div className={`${isExpired ? 'bg-gray-400' : 'bg-primary'} h-full transition-all duration-500 ease-out`} style={{ width: `${progress}%` }}>
+                        <div className={`${isExpired ? 'bg-gray-400' : 'bg-primary'} h-full transition-all duration-500 ease-out`} style={{ width: `${progressPercentage}%` }}>
                         </div>
                     </div>
                 </div>

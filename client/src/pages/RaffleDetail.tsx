@@ -1,10 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useRaffle } from "../hooks/useRaffle";
 import { ArrowLeft, Calendar, Ticket, ShieldCheck } from 'lucide-react';
+import { useState } from "react";
 
 export const RaffleDetail = () => {
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
+    const [selectNumber, setSelectedNumber] = useState<number | null>(null);
 
     // Custom hook handles all the logic: API call, loading, and error states.
     const { raffle, loading, error } = useRaffle(id || '' );
@@ -66,12 +68,33 @@ export const RaffleDetail = () => {
                     </div>
                 </div>
 
+                {/* New Button */}
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-gray-100 pb-10">
+                    <div className="max-w-md mx-auto">
+                        {selectNumber ? (
+                            <button
+                                className="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all flex justify-between px-6 items-center"
+                                onClick={() => alert(`Iniciando compra del número ${selectNumber}`)}
+                            >
+                                <span>Confirmar Número {selectNumber}</span>
+                                <span className="bg-white/20 px-3 py-1 rounded-lg text-sm ">
+                                    ${raffle.pricePerTicket}
+                                </span>
+                            </button>
+                        ) : (
+                            <div className="w-full bg-gray-100 text-gray-400 py-4 rounded-2xl font-bold text-center border-2 border-dashed border-gray-200">
+                                Seleccioná un número para continuar
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* Floating Action Button CTA */}
-                <div className="fixed bottom-24 left-4 right-4">
+                {/* <div className="fixed bottom-24 left-4 right-4">
                     <button className="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-blue-200 active:scale-95 transition-transform">
                         Comprar Tickets
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

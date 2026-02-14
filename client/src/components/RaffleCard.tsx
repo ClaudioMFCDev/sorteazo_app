@@ -14,18 +14,18 @@ export const RaffleCard = ({
 
     // Logic to check is the raffle is expired
     const isExpired = new Date(endDate) < new Date();
-    const isSoldOut = progressPercentage >= maxTickets;
-    const isDisable = isExpired || isSoldOut;
-    
+    const isSoldOut = progressPercentage >= 100;
+    const isDisabled = isExpired || isSoldOut;
+
     return(
-        <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-4 transition-opacity ${isDisable ? 'opacity-60' : 'opacity-100'}`}>
+        <Link to={`/raffle/${id}`} className={`group block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-4 transition-all duration-200 active:scale-[0.98] hover:shadow-md hover:border-primary/20 ${isDisabled ? 'opacity-70 grayscale-[0.5]' : ''}`}>
             <div className="p-4">
                 {/* Header: Title and Price */}
                 <div className="flex justify-between items-start mb-2">
-                    <h3 className={`font-bold text-lg leading-tight ${isDisable ? 'text-gray-500' : 'text-gray-800'}`}>
+                    <h3 className={`font-bold text-lg leading-tight ${isDisabled ? 'text-gray-500' : 'text-gray-800'}`}>
                         ${title}
                     </h3>
-                    <span className={`${isDisable? 'bg-gray-100 text-gray-400' : 'bg-blue-50 text-primary'} text-xs font-bold px-2 py-1 rounded-lg`}>
+                    <span className={`${isDisabled? 'bg-gray-100 text-gray-400' : 'bg-blue-50 text-primary'} text-xs font-bold px-2 py-1 rounded-lg`}>
                         ${pricePerTicket}
                     </span>
                 </div>
@@ -46,7 +46,7 @@ export const RaffleCard = ({
                 <div className="space-y-2">
                     <div className="flex justify-between text-xs font-medium">
                         <span className="text-gray-400">Progreso</span>
-                        <span className={isDisable ? 'text-gray-400' : 'text-primary'}>
+                        <span className={isDisabled ? 'text-gray-400' : 'text-primary'}>
                             {isSoldOut ? 'Completo!' : `${progressPercentage}%`}
                         </span>
                     </div>
@@ -58,7 +58,7 @@ export const RaffleCard = ({
                 </div>
 
             {/* Overlay Message for disabled raffles */}
-            {isDisable && (
+            {isDisabled && (
                 <div className="mt-3 py-1 px-3 bg-gray-50 rounded-lg text-center">
                     <span className="text-xs font-bold bg-gray-500 uppercase tracking-wider">
                         {isSoldOut ? 'Sorteo Completo' : 'Sorteo Finalizado'}
@@ -66,7 +66,7 @@ export const RaffleCard = ({
                 </div>
             )}
         </div>            
-    </div>
+    </Link>
     );    
 };
 

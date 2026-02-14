@@ -13,12 +13,7 @@ export const Home = () => {
                 {MOCK_RAFFLES.map((raffle) => (
                     <RaffleCard
                         key={raffle.id}
-                        title={raffle.title}
-                        pricePerTicket={raffle.pricePerTicket}
-                        maxTickets={raffle.maxTickets}
-                        totalTickets={raffle.totalTickets}
-                        progress={raffle.progressPercentage}
-                        endDate={raffle.endDate}
+                        {...raffle}
                     />
                 ))}
             </div>

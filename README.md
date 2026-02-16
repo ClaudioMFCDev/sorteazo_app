@@ -70,10 +70,6 @@ sorteazo_app/
     DATABASE_URL="postgres://user:pass@ep-random-name.region.aws.neon.tech/neondb..." # Neon Tech connection string
     ```
 
-4.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
 
 ## 📬 Contact & Feedback
 

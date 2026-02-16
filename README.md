@@ -18,7 +18,7 @@ The core goal of this project is not just to build a UI, but to solve **critical
 * **Backend:** Node.js, Express.
 * **Database:** PostgreSQL (Relational schema for data consistency).
 * **Payments:** Mercado Pago API (Webhooks & integration).
-* **Infrastructure:** Vercel (Frontend), [Tu proveedor de BD, ej: Supabase/Neon/Local] (Database).
+* **Infrastructure:** Vercel (Frontend), Railway (Database).
 
 ## 🚀 Roadmap & Progress
 
@@ -26,16 +26,16 @@ I am currently implementing the core transactional features.
 
 - [x] **Project Architecture:** Setup Monorepo/Structure & DB Schema Design.
 - [x] **UI/UX:** Landing page, Raffle details, and Ticket grid selection.
-- [x] **Authentication:** User login and session management.
+- [x] **Authentication:** User login and session management (🚧 *In Progress*).
 - [ ] **Payments Integration:** Connecting Mercado Pago Webhooks (🚧 *In Progress*).
 - [ ] **Concurrency Locks:** Implementing database row-level locking to prevent double-booking (🚧 *In Progress*).
-- [ ] **Admin Dashboard:** Interface for creators to create raffles and view stats.
+- [ ] **Admin Dashboard:** Interface for creators to create raffles and view stats (🚧 *In Progress*).
 
 ## 📦 How to Run Locally
 
 1.  **Clone the repo:**
     ```bash
-    git clone [https://github.com/your-username/sorteazo.git](https://github.com/your-username/sorteazo.git)
+    git clone https://github.com/ClaudioMFCDev/sorteazo_app
     ```
 
 2.  **Install dependencies:**
@@ -53,5 +53,5 @@ I am currently implementing the core transactional features.
 
 ## 📬 Contact & Feedback
 
-Built by **Alex [Tu Apellido]** - Software Engineer (5th Year Student).
-Connect with me on [LinkedIn](LINK_A_TU_LINKEDIN) to follow the development journey!
+Built by **Claudio Castillo** - Software Engineer (5th Year Student).
+Connect with me on https://www.linkedin.com/in/claudio-castillo-dev/ to follow the development journey!

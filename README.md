@@ -14,9 +14,9 @@ The core goal of this project is not just to build a UI, but to solve **critical
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** React, Next.js 14 (App Router), Tailwind CSS, Framer Motion.
+* **Frontend:** React (Vite), Tailwind CSS, Framer Motion.
 * **Backend:** Node.js, Express.
-* **Database:** PostgreSQL (Relational schema for data consistency).
+* **Database:** PostgreSQL (via **Neon Tech** Serverless).
 * **Payments:** Mercado Pago API (Webhooks & integration).
 * **Infrastructure:** Vercel (Frontend), Railway (Database).
 
@@ -31,6 +31,16 @@ I am currently implementing the core transactional features.
 - [ ] **Concurrency Locks:** Implementing database row-level locking to prevent double-booking (🚧 *In Progress*).
 - [ ] **Admin Dashboard:** Interface for creators to create raffles and view stats (🚧 *In Progress*).
 
+## 📂 Project Structure
+
+This is a Monorepo containing both the client and server logic:
+
+```bash
+sorteazo_app/
+├── client/   # React + Vite Frontend
+└── server/   # Node.js + Express Backend
+```
+
 ## 📦 How to Run Locally
 
 1.  **Clone the repo:**
@@ -38,13 +48,27 @@ I am currently implementing the core transactional features.
     git clone https://github.com/ClaudioMFCDev/sorteazo_app
     ```
 
-2.  **Install dependencies:**
+2.  **Setup the Backend (Terminal 1)**
     ```bash
+    cd server
     npm install
+    # Ensure you create a .env file with your DB credentials/PORT
+    npm run dev
     ```
 
-3.  **Setup Environment Variables:**
+3.  **Setup the Frontend (Terminal 2)**
+    ```bash
+    cd client
+    npm install
+    npm run dev
+    ```
+
+4.  **Setup Environment Variables:**
     Create a `.env.local` file with your credentials (DB_URL, MERCADO_PAGO_KEY, etc.).
+    ```bash
+    PORT=3000
+    DATABASE_URL="postgres://user:pass@ep-random-name.region.aws.neon.tech/neondb..." # Neon Tech connection string
+    ```
 
 4.  **Run the development server:**
     ```bash
